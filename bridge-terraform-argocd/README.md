@@ -16,7 +16,7 @@ terraform workspace new production
 terraform apply
 
 # Example of running terraform with variable values supplied from cloudtruth
-terraform apply -var-file <(cloudtruth --env production --profile webinar --project bridge-terraform-argocd template get tfvars -s)
+terraform apply -var-file <(cloudtruth --env development --profile webinar --project bridge-terraform-argocd template get tfvars -s)
 
 
 # Setup argo locally in minikube
@@ -31,7 +31,7 @@ open http://localhost:8080
 # Test manifests with argocd plugin
 export CLOUDTRUTH_API_KEY=xxx
 cd application/
-docker run --platform linux/amd64 -e CLOUDTRUTH_API_KEY -v $(pwd)/k8s:/data --workdir /data cloudtruth/argocd-cloudtruth-plugin /usr/bin/argocd-cloudtruth-plugin --environment production
+docker run --platform linux/amd64 -e CLOUDTRUTH_API_KEY -v $(pwd)/k8s:/data --workdir /data cloudtruth/argocd-cloudtruth-plugin /usr/bin/argocd-cloudtruth-plugin --environment development
 
 # Build container in local minikube
 eval $(minikube docker-env)
@@ -39,4 +39,10 @@ cd application/
 docker build -t cloudtruth/bridge-terraform-argocd-application .
 
 # Add application to argo
-argocd app create mydemo --repo https://github.com/cloudtruth/webinar-examples --path bridge-terraform-argocd/application/k8s --dest-server https://kubernetes.default.svc --dest-namespace default --plugin-env CLOUDTRUTH_ENVIRONMENT=production
+argocd app create mydemo --repo https://github.com/cloudtruth/webinar-examples --path bridge-terraform-argocd/application/k8s --dest-server https://kubernetes.default.svc --dest-namespace default --plugin-env CLOUDTRUTH_ENVIRONMENT=development
+# local sync?
+# argocd app sync mydemo --local bridge-terraform-argocd/application/k8s
+
+# Visit application
+kubectl port-forward svc/mydemo -n mydemo-development 9292:9292
+open http://localhost:9292

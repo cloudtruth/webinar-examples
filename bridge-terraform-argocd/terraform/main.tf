@@ -65,6 +65,17 @@ resource "cloudtruth_parameter_value" "app-key-arn" {
   value = aws_kms_key.app-key.arn
 }
 
+resource "cloudtruth_parameter" "app-tf-secret" {
+  count = local.provision_ct_params ? 1 : 0
+  name = "app_tf_secret"
+  secret = true
+}
+resource "cloudtruth_parameter_value" "app-tf-secret" {
+  parameter_name = "app_tf_secret"
+  environment = local.env
+  value = timestamp()
+}
+
 output "cluster_config" {
   value = var.cluster_config
 }

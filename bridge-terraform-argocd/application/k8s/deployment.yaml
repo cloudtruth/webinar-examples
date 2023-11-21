@@ -23,4 +23,4 @@ spec:
         - configMapRef:
             name: <app_name>
         - secretRef:
-            name: <app_name>
+            name: <app_name>-<parameters_version>
