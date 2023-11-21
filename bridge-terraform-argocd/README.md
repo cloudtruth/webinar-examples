@@ -39,10 +39,13 @@ cd application/
 docker build -t cloudtruth/bridge-terraform-argocd-application .
 
 # Add application to argo
-argocd app create mydemo --repo https://github.com/cloudtruth/webinar-examples --path bridge-terraform-argocd/application/k8s --dest-server https://kubernetes.default.svc --dest-namespace default --plugin-env CLOUDTRUTH_ENVIRONMENT=development
-# local sync?
-# argocd app sync mydemo --local bridge-terraform-argocd/application/k8s
+argocd app create mydemo-development --repo https://github.com/cloudtruth/webinar-examples --path bridge-terraform-argocd/application/k8s --dest-server https://kubernetes.default.svc --plugin-env CLOUDTRUTH_ENVIRONMENT=development
+
+argocd app create mydemo-production --repo https://github.com/cloudtruth/webinar-examples --path bridge-terraform-argocd/application/k8s --dest-server https://kubernetes.default.svc --plugin-env CLOUDTRUTH_ENVIRONMENT=production
 
 # Visit application
 kubectl port-forward svc/mydemo -n mydemo-development 9292:9292
 open http://localhost:9292
+
+kubectl port-forward svc/mydemo -n mydemo-development 9293:9292
+open http://localhost:9293

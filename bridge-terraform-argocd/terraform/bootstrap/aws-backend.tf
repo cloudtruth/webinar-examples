@@ -42,3 +42,20 @@ resource "aws_dynamodb_table" "state-lock-table" {
     type = "S"
   }
 }
+
+variable "cloudtruth_aws_integration_external_id" {
+  type        = string
+  description = "External ID from cloudtruth integration"
+}
+
+module "grant-cloudtruth-access" {
+  source = "github.com/cloudtruth/terraform-cloudtruth-access"
+  role_name = "cloudtruth-webinars"
+  external_id = var.cloudtruth_aws_integration_external_id
+  account_ids = ["609878994716"]
+  services_enabled = ["s3"]
+  services_write_enabled = []
+  s3_resources     = [aws_s3_bucket.state.arn, "${aws_s3_bucket.state.arn}/*"]
+  ssm_resources = []
+  secretsmanager_resources = []
+}
