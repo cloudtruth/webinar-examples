@@ -12,6 +12,6 @@ configure :development do
 end
 
 get '/'  do
-    @myenv = ENV.select {|k, v| k.start_with? 'APP_'}
+    @myenv = ENV.select {|k, v| k.start_with? 'APP_'}.sort
     erb :index
 end
