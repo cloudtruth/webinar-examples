@@ -1,14 +1,27 @@
 <section class="hero is-link is-medium">
   <div class="hero-body">
     <p class="title">
-      This is a demo application
+      Demo Application
     </p>
-    <p class="subtitle">
-      The most interesting env in the world:
-      <% @myenv.each do |k, v| %>
-        <br>
-        <%= k %>: <%= v %>
-      <% end %>
-    </p>
+    <div class="container">
+      <hr>
+      <h2 class="title">The most interesting env in the world</h2>
+      <hr>
+      <table class="table is-hoverable has-background-link has-text-success">
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Value</th>
+              </tr>
+          </thead>
+          <tbody>
+              <% @myenv.each do |k, v| %>
+                  <tr>
+                      <td><%= k %></td><td><%= v %></td>
+                  </tr>
+              <% end %>
+          </tbody>
+      </table>
+    </div>
   </div>
 </section>
