@@ -21,6 +21,6 @@ spec:
         imagePullPolicy: Never
         envFrom:
         - configMapRef:
-            name: <app_name>
+            name: <app_name>-<parameters_version>
         - secretRef:
             name: <app_name>-<parameters_version>

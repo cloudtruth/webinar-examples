@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: <app_name>
+  name: <app_name>-<parameters_version>
   namespace: <app_namespace>
   labels:
     app: <app_name>
+    version: <parameters_version>
 data:
    APP_ENVIRONMENT: "<app_environment>"
    APP_BUCKET_NAME: "<app_bucket_name>"
