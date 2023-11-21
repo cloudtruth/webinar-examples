@@ -44,8 +44,5 @@ argocd app create mydemo-development --repo https://github.com/cloudtruth/webina
 argocd app create mydemo-production --repo https://github.com/cloudtruth/webinar-examples --path bridge-terraform-argocd/application/k8s --dest-server https://kubernetes.default.svc --plugin-env CLOUDTRUTH_ENVIRONMENT=production
 
 # Visit application
-kubectl port-forward svc/mydemo -n mydemo-development 9292:9292
-open http://localhost:9292
-
-kubectl port-forward svc/mydemo -n mydemo-development 9293:9292
-open http://localhost:9293
+minikube service -n mydemo-development mydemo
+minikube service -n mydemo-production mydemo
